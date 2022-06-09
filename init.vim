@@ -29,6 +29,7 @@ Plugin 'DavidEGx/ctrlp-smarttabs'
 Plugin 'tpope/vim-commentary'
 Plugin 'morhetz/gruvbox'
 Plugin 'yuki-uthman/nvim-vimpad'
+Plugin 'farfanoide/vim-kivy'
 " ...
 
 " All of your Plugins must be added before the following line
@@ -195,3 +196,7 @@ tnoremap <silent><A-t> <C-\><C-n>:call TermToggle(12)<CR>
 " Terminal go back to normal mode
 tnoremap <silent><Esc> <C-\><C-n>
 tnoremap <silent>:q! <C-\><C-n>:q!<CR>
+
+" Run Python current buffer
+autocmd FileType python map <buffer> <C-SPACE> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
+autocmd FileType python imap <buffer> <C-SPACE> <esc>:w<CR>:exec '!python3' shellescape(@%, 1)<CR>
