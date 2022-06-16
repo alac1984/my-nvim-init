@@ -200,3 +200,18 @@ tnoremap <silent>:q! <C-\><C-n>:q!<CR>
 " Run Python current buffer
 autocmd FileType python map <buffer> <C-SPACE> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
 autocmd FileType python imap <buffer> <C-SPACE> <esc>:w<CR>:exec '!python3' shellescape(@%, 1)<CR>
+
+" Commentary for kivy language
+" I've try but no success right now
+" augroup filetypedetect
+" 	au! BufRead, BufNewFile *.kv setfiletype kivy
+" augroup END
+
+" autocmd FileType kivy setlocal commentstring=#\ %s
+
+" Save foldings automatically
+augroup remember_folds
+  autocmd!
+  au BufWinLeave ?* mkview 1
+  au BufWinEnter ?* silent! loadview 1
+augroup END
