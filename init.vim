@@ -121,9 +121,16 @@ nnoremap K :set wrap!<CR>
 " Pylint
 let g:syntastic_python_pylint_args = '--rcfile=/home/andre/.pylintrc'
 
+" Syntastic
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 1
+
+" CtrlP
+let g:ctrlp_show_hidden = 1
+
 " CtrlP Smart Tabs
 let g:ctrlp_extensions = ['smarttabs']
-nnoremap <C-,> :CtrlPSmartTabs<CR>
+nmap <leader>p :CtrlPSmartTabs<CR>
 
 let g:ctrlp_prompt_mappings = {
     \ 'AcceptSelection("e")': ['<c-t>'],
@@ -212,6 +219,6 @@ autocmd FileType python imap <buffer> <C-SPACE> <esc>:w<CR>:exec '!python3' shel
 " Save foldings automatically
 augroup remember_folds
   autocmd!
-  au BufWinLeave ?* mkview 1
-  au BufWinEnter ?* silent! loadview 1
+  au BufWinLeave *.* mkview
+  au BufWinEnter *.* silent! loadview
 augroup END
