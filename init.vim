@@ -17,7 +17,7 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'tmhedberg/SimpylFold'
 Plugin 'vim-scripts/indentpython.vim'
 Plugin 'Valloric/YouCompleteMe'
-Plugin 'vim-syntastic/syntastic'
+Plugin 'dense-analysis/ale'
 Plugin 'nvie/vim-flake8'
 Plugin 'kien/ctrlp.vim'
 Plugin 'tpope/vim-fugitive'
@@ -118,12 +118,9 @@ nnoremap <F5> :TODOToggle<CR>
 " Remaping the dangerous K command
 nnoremap K :set wrap!<CR>
 
-" Pylint
-let g:syntastic_python_pylint_args = '--rcfile=/home/andre/.pylintrc'
-
-" Syntastic
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 1
+" ALE
+let g:ale_sign_column_always = 1
+let g:ale_linters = {'python': ['pylint']}
 
 " CtrlP
 let g:ctrlp_show_hidden = 1
