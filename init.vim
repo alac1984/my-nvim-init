@@ -14,7 +14,6 @@ Plugin 'gmarik/Vundle.vim'
 
 " add all your plugins here (note older versions of Vundle
 " used Bundle instead of Plugin)
-Plugin 'tmhedberg/SimpylFold'
 Plugin 'vim-scripts/indentpython.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'dense-analysis/ale'
@@ -31,7 +30,8 @@ Plugin 'tpope/vim-commentary'
 Plugin 'morhetz/gruvbox'
 Plugin 'yuki-uthman/nvim-vimpad'
 Plugin 'farfanoide/vim-kivy'
-Plugin 'github/copilot.vim'
+Plugin 'lepture/vim-jinja'
+Plugin 'jistr/vim-nerdtree-tabs'
 " ...
 
 " All of your Plugins must be added before the following line
@@ -46,9 +46,9 @@ au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 set encoding=utf-8
 set clipboard=unnamedplus
 set nowrap
-set nu
+set number
 nnoremap <SPACE> <Nop>
-let mapleader=" "
+let mapleader = '\'
 
 " PEP 8 indentation
 au BufNewFile,BufRead *.py
@@ -64,7 +64,10 @@ au BufNewFile,BufRead *.py
 au BufNewFile,BufRead *.js, *.html, *.css
 			\ set tabstop=2 |
 			\ set softtabstop=2 |
-			\ set shiftwidth=2
+			\ set shiftwidth=2 |
+			\ set tw=0 |
+			\ set fo=cq |
+			\ set wm=0
 
 " Indentation for .vim files
 au BufNewFile,BufRead *.vim
@@ -95,7 +98,7 @@ colorscheme gruvbox
 hi Normal guibg=NONE ctermbg=NONE
 
 " NERDTree
-nnoremap <C-f> :NERDTreeToggle<CR>
+nnoremap <C-f> :NERDTreeTabsToggle<CR>
 vnoremap ++ <plug>NERDCommenterToggle
 nnoremap ++ <plug>NERDCommenterToggle
 let NERDTreeMapOpenInTab='<ENTER>'
@@ -114,11 +117,11 @@ nnoremap K <ESC>
 " ALE
 let g:ale_sign_column_always = 1
 let g:ale_linters = {'python': ['flake8', 'mypy']}
-" let g:ale_fixers = {'python': ['black']}
-" let g:ale_python_black_auto_poetry = 1
+let g:ale_fixers = {'python': ['black']}
+let g:ale_python_black_auto_poetry = 1
 let g:ale_python_mypy_auto_poetry = 1
 let g:ale_python_mypy_options = '--show-error-codes'
-" let g:ale_python_black_options = '--line-length 86 --experimental-string-processing'
+let g:ale_python_black_options = '--line-length 86 --experimental-string-processing'
 let g:ale_fix_on_save = 1
 
 " CtrlP
@@ -201,8 +204,8 @@ tnoremap <silent><Esc> <C-\><C-n>
 tnoremap <silent>:q! <C-\><C-n>:q!<CR>
 
 " Run Python current buffer
-autocmd FileType python map <buffer> <C-SPACE> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
-autocmd FileType python imap <buffer> <C-SPACE> <esc>:w<CR>:exec '!python3' shellescape(@%, 1)<CR>
+autocmd FileType python map <buffer> <leader>r :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
+autocmd FileType python imap <buffer> <leader>r <esc>:w<CR>:exec '!python3' shellescape(@%, 1)<CR>
 
 " Commentary for kivy language
 " I've try but no success right now
@@ -218,3 +221,9 @@ augroup remember_folds
 	au BufWinLeave *.* mkview
 	au BufWinEnter *.* silent! loadview
 augroup END
+
+" Jinja2 plugin
+au BufNewFile,BufRead *.html,*.htm,*.shtml,*.stm set ft=jinja
+
+	" I HATE TEXTWIDTH
+	set tw=0
