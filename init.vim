@@ -1,42 +1,38 @@
-" Vundle settings
-set nocompatible              " required
-filetype off                  " required
+" Plugins
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call plug#begin()
+Plug 'gmarik/Vundle.vim'
+Plug 'vim-scripts/indentpython.vim'
+Plug 'Valloric/YouCompleteMe'
+Plug 'dense-analysis/ale'
+Plug 'psf/black'
+Plug 'kien/ctrlp.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'preservim/nerdtree'
+Plug 'Nopik/vim-nerdtree-direnter'
+Plug 'Dimercel/todo-vim'
+Plug 'DavidEGx/ctrlp-smarttabs'
+Plug 'tpope/vim-commentary'
+Plug 'yuki-uthman/nvim-vimpad'
+Plug 'farfanoide/vim-kivy'
+Plug 'lepture/vim-jinja'
+Plug 'jistr/vim-nerdtree-tabs'
+Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
+Plug 'lervag/vimtex'
+Plug 'alvan/vim-closetag'
+Plug 'AndrewRadev/tagalong.vim'
 
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
+call plug#end()
 
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
+" YouCompleteMe logs. Use the :YcmDebugInfo to see them
+" let g:ycm_server_keep_logfiles = 1
+" let g:ycm_server_log_level = 'debug'
 
-" add all your plugins here (note older versions of Vundle
-" used Bundle instead of Plugin)
-Plugin 'vim-scripts/indentpython.vim'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'dense-analysis/ale'
-Plugin 'psf/black'
-Plugin 'kien/ctrlp.vim'
-Plugin 'tpope/vim-fugitive'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'preservim/nerdtree'
-Plugin 'Nopik/vim-nerdtree-direnter'
-Plugin 'Dimercel/todo-vim'
-Plugin 'DavidEGx/ctrlp-smarttabs'
-Plugin 'tpope/vim-commentary'
-Plugin 'morhetz/gruvbox'
-Plugin 'yuki-uthman/nvim-vimpad'
-Plugin 'farfanoide/vim-kivy'
-Plugin 'lepture/vim-jinja'
-Plugin 'jistr/vim-nerdtree-tabs'
-" ...
-
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
+" Gkeep config
+let g:gkeep_sync_dir = "~/.gkeepnotes"
+let g:gkeep_log_levels = {'gkeep': 'debug', 'gkeepapi': 'debug'}
 
 " Flagging whitespace
 highlight BadWhitespace ctermbg=red guibg=darkred
@@ -55,19 +51,49 @@ au BufNewFile,BufRead *.py
 			\ set tabstop=4 |
 			\ set softtabstop=4 |
 			\ set shiftwidth=4 |
-			\ set textwidth=79 |
+			\ set textwidth=0 |
 			\ set expandtab |
 			\ set autoindent |
 			\ set fileformat=unix
 
-" Indentation for js, html and css files
-au BufNewFile,BufRead *.js, *.html, *.css
+" LaTeX config
+au BufNewFile,BufRead *.tex
+			\ set tabstop=2 |
+			\ set softtabstop=2 |
+			\ set shiftwidth=2 |
+			\ set textwidth=0 |
+			\ set expandtab |
+			\ set autoindent |
+			\ set fileformat=unix
+
+" Indentation for js files
+au BufNewFile,BufRead *.js
+			\ set tabstop=4 |
+			\ set softtabstop=4 |
+			\ set shiftwidth=4 |
+			\ set textwidth=0 |
+			\ set expandtab |
+			\ set autoindent |
+			\ set fileformat=unix
+
+" HTML files
+au BufNewFile,BufRead *.html
+			\ set tabstop=2 |
+			\ set softtabstop=2 |
+			\ set shiftwidth=2 |
+			\ set textwidth=0 |
+			\ set expandtab |
+			\ set autoindent |
+			\ set fileformat=unix
+
+" Indentation for json files
+au BufNewFile,BufRead *.json
 			\ set tabstop=2 |
 			\ set softtabstop=2 |
 			\ set shiftwidth=2 |
 			\ set tw=0 |
-			\ set fo=cq |
 			\ set wm=0
+
 
 " Indentation for .vim files
 au BufNewFile,BufRead *.vim
@@ -93,8 +119,7 @@ syntax on
 
 " 256 colors, theme and transparent background
 set t_Co=256
-let g:gruvbox_italic=1
-colorscheme gruvbox
+colorscheme catppuccin
 hi Normal guibg=NONE ctermbg=NONE
 
 " NERDTree
@@ -104,7 +129,7 @@ nnoremap ++ <plug>NERDCommenterToggle
 let NERDTreeMapOpenInTab='<ENTER>'
 
 " Airline
-let g:airline_theme='gruvbox'
+let g:airline_theme='base16'
 let g:airline_solarized_bg='dark'
 let g:airline_powerline_fonts = 1
 
@@ -121,8 +146,12 @@ let g:ale_fixers = {'python': ['black']}
 let g:ale_python_black_auto_poetry = 1
 let g:ale_python_mypy_auto_poetry = 1
 let g:ale_python_mypy_options = '--show-error-codes'
-let g:ale_python_black_options = '--line-length 86 --experimental-string-processing'
+let g:ale_python_black_options = '--line-length 88 --experimental-string-processing'
 let g:ale_fix_on_save = 1
+let g:ale_virtualtext_cursor = 'disabled'
+
+" I don't know what this does
+" let g:ale_linters_explicit = 1
 
 " CtrlP
 let g:ctrlp_show_hidden = 1
@@ -223,7 +252,12 @@ augroup remember_folds
 augroup END
 
 " Jinja2 plugin
-au BufNewFile,BufRead *.html,*.htm,*.shtml,*.stm set ft=jinja
+" au BufNewFile,BufRead *.html,*.htm,*.shtml,*.stm set ft=jinja
 
-	" I HATE TEXTWIDTH
-	set tw=0
+" I HATE TEXTWIDTH
+set tw=0
+
+" Tex
+syntax enable
+
+
