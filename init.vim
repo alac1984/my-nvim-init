@@ -23,7 +23,7 @@ Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 Plug 'lervag/vimtex'
 Plug 'alvan/vim-closetag'
 Plug 'AndrewRadev/tagalong.vim'
-
+Plug 'dccsillag/magma-nvim', { 'do': ':UpdateRemotePlugins' }
 call plug#end()
 
 " YouCompleteMe logs. Use the :YcmDebugInfo to see them
@@ -40,7 +40,7 @@ au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
 " My personal basic settings
 set encoding=utf-8
-set clipboard=unnamedplus
+set clipboard+=unnamedplus
 set nowrap
 set number
 nnoremap <SPACE> <Nop>
@@ -153,6 +153,11 @@ let g:ale_virtualtext_cursor = 'disabled'
 " I don't know what this does
 " let g:ale_linters_explicit = 1
 
+" How do I use CTRLP and SmartTabs together (in case I forget again):
+" 
+" <leader>p makes me open SmartTabs directly (current leader is \)
+" CTRL J and K to swap tabs
+
 " CtrlP
 let g:ctrlp_show_hidden = 1
 
@@ -259,5 +264,18 @@ set tw=0
 
 " Tex
 syntax enable
+let g:vimtex_view_general_viewer = 'evince'
+let g:vimtex_view_general_options = '-f @pdf\#src:@line@tex'
+let g:vimtex_compiler_method = 'latexrun'
 
+" Magma
+nnoremap <silent><expr> <LocalLeader>r  :MagmaEvaluateOperator<CR>
+nnoremap <silent>       <LocalLeader>rr :MagmaEvaluateLine<CR>
+xnoremap <silent>       <LocalLeader>r  :<C-u>MagmaEvaluateVisual<CR>
+nnoremap <silent>       <LocalLeader>rc :MagmaReevaluateCell<CR>
+nnoremap <silent>       <LocalLeader>rd :MagmaDelete<CR>
+nnoremap <silent>       <LocalLeader>ro :MagmaShowOutput<CR>
+
+let g:magma_automatically_open_output = v:false
+let g:magma_image_provider = "ueberzug"
 
